@@ -1,5 +1,7 @@
 package org.taskmanager.services;
 
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.taskmanager.dtos.TaskDTO;
@@ -22,6 +24,17 @@ public class TaskService {
                 .toList();
     }
 
+    public TaskDTO getTaskById(Integer id) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Task was not found"));
+        return taskMapper.taskToTaskDTO(task);
+    }
 
-
+    public void addTask(TaskDTO taskDTO) {
+        Task task = taskMapper.taskDTOToTask(taskDTO);
+        if (taskRepository.existsById(task.getId())) {
+            throw new EntityExistsException("Task already exists");
+        }
+        taskRepository.save(task);
+    }
 }

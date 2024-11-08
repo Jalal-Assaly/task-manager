@@ -6,5 +6,4 @@ import org.taskmanager.entities.Task;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Integer> {
-
 }
