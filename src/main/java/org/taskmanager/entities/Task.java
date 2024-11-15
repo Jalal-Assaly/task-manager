@@ -1,9 +1,6 @@
 package org.taskmanager.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import org.taskmanager.entities.enums.Priority;
 import org.taskmanager.entities.enums.Status;
@@ -15,7 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "tasks")
 public class Task {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String description;
